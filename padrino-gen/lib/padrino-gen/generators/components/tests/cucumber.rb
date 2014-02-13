@@ -6,6 +6,13 @@ require File.expand_path(File.dirname(__FILE__) + "/../../config/boot")
 
 require 'capybara/cucumber'
 require 'rspec/expectations'
+require 'webrat'
+
+Webrat.configure do |config|
+  config.mode = :sinatra
+end
+World(Webrat::Methods)
+World(Webrat::Matchers)
 
 ##
 # You can handle all padrino applications using instead:
@@ -74,6 +81,7 @@ def setup_test
   require_dependencies 'rack-test', :require => 'rack/test', :group => 'test'
   require_dependencies 'cucumber', :group => 'test'
   require_dependencies 'capybara', :group => 'test'
+  require_dependencies 'webrat',   :group => 'test'
   insert_test_suite_setup CUCUMBER_SETUP, :path => "features/support/env.rb"
   create_file destination_root("features/support/url.rb"), CUCUMBER_URL
   create_file destination_root("features/add.feature"), CUCUMBER_FEATURE
